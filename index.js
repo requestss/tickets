@@ -412,7 +412,7 @@ async function handleSlashCommand(interaction) {
       break;
 
     case 'close':
-      const ticketToClose = db.prepare('SELECT * FROM tickets WHERE channelId = ?').get(channel.id);
+      const ticketToClose = db.prepare(`UPDATE tickets SET status = 'closed', closedAt = strftime('%s', 'now') WHERE channelId = ?`).run(channel.id);
       if (!ticketToClose) throw new Error('This is not a ticket channel!');
       if (!isStaff && ticketToClose.ownerId !== user.id) throw new Error('Only ticket owners or staff can close tickets!');
       
