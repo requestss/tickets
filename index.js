@@ -459,7 +459,7 @@ async function handleSlashCommand(interaction) {
       break;
 
     case 'open':
-      const closedTicket = db.prepare('SELECT * FROM tickets WHERE channelId = ? AND status = 'closed'').get(channel.id);
+      const closedTicket = db.prepare(`SELECT * FROM tickets WHERE channelId = ? AND status = 'closed'`).get(channel.id);
       if (!closedTicket) throw new Error('This is not a closed ticket!');
       if (!isStaff) throw new Error('Only staff can reopen tickets!');
       
